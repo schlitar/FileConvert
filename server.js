@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const convertHandler = require("./api/convert.js");
 
-const ROOT = __dirname;
+const ROOT = path.join(__dirname, "public");
 const MIME = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
