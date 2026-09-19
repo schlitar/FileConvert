@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FormatDeğiştir — Tüm Format Dönüştürücü</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="bg" aria-hidden="true">
+    <div class="blob blob--a"></div>
+    <div class="blob blob--b"></div>
+    <div class="blob blob--c"></div>
+    <div class="grid-overlay"></div>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#">
+        <span class="brand-logo">◈</span>
+        <span class="brand-name">Format<span class="grad">Değiştir</span></span>
+      </a>
+      <nav class="nav">
+        <a href="#converter">Dönüştürücü</a>
+        <a href="#catalog">Format Kataloğu</a>
+        <a href="#features">Özellikler</a>
+      </nav>
+      <button class="btn btn--ghost" id="themeToggle" type="button" aria-label="Tema değiştir">🌙</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <p class="hero-badge">
+          <span class="pulse-dot"></span>
+          200+ format çifti · Tamamen ücretsiz · Verileriniz gizlilikle işlenir
+        </p>
+        <h1 class="hero-title">
+          Dosyalarınızı birkaç<br />
+          saniyede <span class="grad-text">dönüştürün</span>
+        </h1>
+        <p class="hero-sub">
+          Görüntü dönüştürmeleri tamamen tarayıcınızda, diğer formatlar güvenli
+          sunucumuzda işlenir. Hızlı, güvenli ve ücretsiz.
+        </p>
+      </div>
+    </section>
+
+    <section class="converter-wrap" id="converter">
+      <div class="container">
+        <div class="card converter">
+          <div class="converter-head">
+            <h2>Dosya Dönüştürücü</h2>
+            <span class="chip chip--live">Çevrimiçi &amp; Yerel</span>
+          </div>
+
+          <div class="dropzone" id="dropzone">
+            <input type="file" id="fileInput" hidden />
+            <div class="dropzone-inner">
+              <div class="dropzone-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 16V4m0 0 4 4m-4-4-4 4" />
+                  <path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" />
+                </svg>
+              </div>
+              <p class="dropzone-title">Dosyaları buraya sürükleyip bırakın</p>
+              <p class="dropzone-sub">veya <span class="link">bilgisayarınızdan seçin</span></p>
+              <p class="dropzone-meta">Format otomatik algılanır · JPG, PNG, WEBP, MP3, MP4 ve daha fazlası · Çoklu dosya desteklenir</p>
+            </div>
+          </div>
+
+          <div class="picker">
+            <div class="picker-group">
+              <label>Kaynak format</label>
+              <div class="detect-box" id="detectBox">
+                <span class="detect-ext" id="detectExt">—</span>
+                <span class="detect-name" id="detectName">Dosya yüklenmedi</span>
+              </div>
+            </div>
+            <div class="picker-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
+            </div>
+            <div class="picker-group">
+              <label>Hedef format</label>
+              <div class="select-wrap" id="toFormatDD">
+                <button class="select-trigger" type="button" data-trigger aria-haspopup="listbox" aria-expanded="false">
+                  <span class="select-value" data-value>—</span>
+                  <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div class="select-panel" data-panel hidden>
+                  <div class="select-search-wrap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+                    <input class="select-search" type="text" placeholder="Format ara…" autocomplete="off" data-search />
+                  </div>
+                  <div class="select-options" data-options></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="compat-note" id="compatNote"></div>
+
+          <button class="btn btn--primary convert-btn" id="convertBtn" type="button" disabled>
+            <span class="btn-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m22 2-7 20-4-9-9-4Z" />
+                <path d="M22 2 11 13" />
+              </svg>
+            </span>
+            <span class="btn-label">Dönüştürmeyi Başlat</span>
+          </button>
+
+          <div class="progress" id="progress" hidden>
+            <div class="progress-bar" id="progressBar"></div>
+            <span class="progress-text" id="progressText">%0</span>
+          </div>
+
+          <div class="queue" id="queue"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="catalog" id="catalog">
+      <div class="container">
+        <h2 class="section-title">Desteklenen Format Kataloğu</h2>
+        <p class="section-sub">Seçtiğiniz formata göre mümkün olan tüm dönüştürmeler. <span class="badge badge--ok">Tarayıcıda</span> işaretli dönüştürmeler anında çalışır.</p>
+
+        <div class="filters">
+          <button class="filter-chip active" data-filter="all">Tümü</button>
+          <button class="filter-chip" data-filter="gorsel">Görüntü</button>
+          <button class="filter-chip" data-filter="ses">Ses</button>
+          <button class="filter-chip" data-filter="video">Video</button>
+          <button class="filter-chip" data-filter="belge">Belge</button>
+          <button class="filter-chip" data-filter="arsiv">Arşiv</button>
+          <button class="filter-chip" data-filter="font">Font</button>
+          <button class="filter-chip" data-filter="diger">Diğer</button>
+        </div>
+
+        <div class="catalog-grid" id="catalogGrid"></div>
+      </div>
+    </section>
+
+    <section class="features" id="features">
+      <div class="container">
+        <h2 class="section-title">Neden <span class="grad-text">FormatDeğiştir</span>?</h2>
+        <div class="features-grid">
+          <article class="card feature">
+            <div class="feature-icon" style="--fc:#7c3aed">⚡</div>
+            <h3>Işık Hızında</h3>
+            <p>Dönüştürmeler cihazınızda, tarayıcı içinde gerçekleşir. Dosyalar sunucuya yüklenmez, bu yüzden işlem neredeyse anında biter.</p>
+          </article>
+          <article class="card feature">
+            <div class="feature-icon" style="--fc:#06b6d4">🔒</div>
+            <h3>Gizlilik Önce</h3>
+            <p>Tüm işlemler yereldir. Dosyalarınız hiçbir zaman cihazınızdan çıkmaz — özel belgeler ve kişisel veriler tamamen güvende.</p>
+          </article>
+          <article class="card feature">
+            <div class="feature-icon" style="--fc:#ec4899">🆓</div>
+            <h3>Sonuna Kadar Ücretsiz</h3>
+            <p>Sınırsız dönüştürme, dosya boyutu veya günlük kullanım kotası yok. Üyelik, ödeme veya kurulum gerekmez.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>◈ FormatDeğiştir — Modern format dönüştürücü</p>
+      <p class="footer-sub">Görüntü dönüştürmeleri tarayıcınızda, diğer formatlar kendi sunucumuzda (ffmpeg) gerçekleşir.</p>
+    </div>
+  </footer>
+
+  <div class="toast-wrap" id="toastWrap"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

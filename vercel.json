@@ -1,0 +1,8 @@
+{
+  "functions": {
+    "api/convert.js": {
+      "includeFiles": "node_modules/ffmpeg-static/**",
+      "maxDuration": 60
+    }
+  }
+}
