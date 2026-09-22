@@ -2,6 +2,7 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const convertHandler = require("./api/convert.js");
+const signHandler = require("./api/sign.js");
 
 const ROOT = path.join(__dirname, "public");
 const MIME = {
@@ -22,6 +23,10 @@ const server = http.createServer((req, res) => {
 
   if (req.method === "POST" && url.pathname === "/api/convert") {
     return convertHandler(req, res);
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/sign") {
+    return signHandler(req, res);
   }
 
   if (req.method !== "GET" && req.method !== "HEAD") {
@@ -51,6 +56,7 @@ const server = http.createServer((req, res) => {
       return res.end("Not Found");
     }
     res.setHeader("Content-Type", MIME[path.extname(safe)] || "application/octet-stream");
+    res.setHeader("Cache-Control", "no-store");
     res.end(data);
   });
 });

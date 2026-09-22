@@ -1,144 +1,186 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FormatDeğiştir — Tüm Format Dönüştürücü</title>
+  <meta name="color-scheme" content="light dark" />
+  <meta name="description" content="FormatDeğiştir — 200+ format çifti, ücretsiz ve gizlilik odaklı dosya dönüştürücü. Görüntü dönüşümleri tarayıcında anında çalışır." />
+  <title>FormatDeğiştir — Dosya format dönüştürücü</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%232563EB'/%3E%3Cstop offset='1' stop-color='%23EA580C'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='9' fill='url(%23g)'/%3E%3Ctext x='16' y='22' font-family='Arial,sans-serif' font-size='14' font-weight='bold' fill='white' text-anchor='middle'%3EFD%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <div class="bg" aria-hidden="true">
-    <div class="blob blob--a"></div>
-    <div class="blob blob--b"></div>
-    <div class="blob blob--c"></div>
-    <div class="grid-overlay"></div>
-  </div>
-
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="#">
-        <span class="brand-logo">◈</span>
-        <span class="brand-name">Format<span class="grad">Değiştir</span></span>
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg>
+        </span>
+        <span class="brand-name">Format<span class="brand-name-accent">Değiştir</span></span>
       </a>
-      <nav class="nav">
+      <nav class="nav" aria-label="Ana gezinme">
         <a href="#converter">Dönüştürücü</a>
-        <a href="#catalog">Format Kataloğu</a>
+        <a href="#catalog">Katalog</a>
         <a href="#features">Özellikler</a>
       </nav>
-      <button class="btn btn--ghost" id="themeToggle" type="button" aria-label="Tema değiştir">🌙</button>
+      <div class="header-actions">
+        <button class="key icon-btn" id="themeToggle" type="button" aria-label="Tema değiştir"></button>
+        <a class="btn btn--primary btn--sm" href="#converter">Hemen dönüştür</a>
+      </div>
     </div>
   </header>
 
   <main>
-    <section class="hero">
-      <div class="container">
-        <p class="hero-badge">
-          <span class="pulse-dot"></span>
-          200+ format çifti · Tamamen ücretsiz · Verileriniz gizlilikle işlenir
-        </p>
-        <h1 class="hero-title">
-          Dosyalarınızı birkaç<br />
-          saniyede <span class="grad-text">dönüştürün</span>
-        </h1>
-        <p class="hero-sub">
-          Görüntü dönüştürmeleri tamamen tarayıcınızda, diğer formatlar güvenli
-          sunucumuzda işlenir. Hızlı, güvenli ve ücretsiz.
-        </p>
-      </div>
-    </section>
-
-    <section class="converter-wrap" id="converter">
-      <div class="container">
-        <div class="card converter">
-          <div class="converter-head">
-            <h2>Dosya Dönüştürücü</h2>
-            <span class="chip chip--live">Çevrimiçi &amp; Yerel</span>
+    <section class="hero" id="converter">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-dot"></span> 200+ format çifti &middot; ücretsiz &middot; gizlilik odaklı</p>
+          <h1 class="hero-title">Dosyanı <span class="grad">bırak,</span><br />formatını değiştir</h1>
+          <p class="hero-sub">
+            Görüntü dönüşümleri tarayıcında anında, diğer formatlar güvenli sunucuda
+            işlenir. Sürükle, bırak, indir — hız sınırı yok.
+          </p>
+          <ul class="hero-points">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+              Dosyaların hiçbir zaman cihazından çıkmaz
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+              Çoklu dosya, sınırsız kullanım
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+              Üyelik ve kayıt yok
+            </li>
+          </ul>
+          <div class="hero-cta">
+            <a class="btn btn--primary key" href="#converter">
+              <span class="btn-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18M3 12h18M3 20h12"/></svg>
+              </span>
+              <span class="btn-label">Kullanmaya başla</span>
+            </a>
+            <a class="btn btn--ghost" href="#catalog">Kataloğa göz at</a>
           </div>
-
-          <div class="dropzone" id="dropzone">
-            <input type="file" id="fileInput" hidden />
-            <div class="dropzone-inner">
-              <div class="dropzone-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 16V4m0 0 4 4m-4-4-4 4" />
-                  <path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" />
-                </svg>
-              </div>
-              <p class="dropzone-title">Dosyaları buraya sürükleyip bırakın</p>
-              <p class="dropzone-sub">veya <span class="link">bilgisayarınızdan seçin</span></p>
-              <p class="dropzone-meta">Format otomatik algılanır · JPG, PNG, WEBP, MP3, MP4 ve daha fazlası · Çoklu dosya desteklenir</p>
-            </div>
+          <div class="hero-tags" aria-hidden="true">
+            <span class="chip chip--soft">jpg → webp</span>
+            <span class="chip chip--soft">mp3 → flac</span>
+            <span class="chip chip--soft">mp4 → webm</span>
           </div>
+        </div>
 
-          <div class="picker">
-            <div class="picker-group">
-              <label>Kaynak format</label>
-              <div class="detect-box" id="detectBox">
-                <span class="detect-ext" id="detectExt">—</span>
-                <span class="detect-name" id="detectName">Dosya yüklenmedi</span>
+        <div class="hero-stage">
+          <div class="card converter">
+            <div class="converter-head">
+              <div>
+                <p class="kicker">01 / Konvertör</p>
+                <h2>Dosya Dönüştürücü</h2>
+              </div>
+              <span class="chip chip--live"><span class="pulse-dot"></span> Çevrimiçi</span>
+            </div>
+
+            <div class="dropzone key" id="dropzone" role="button" tabindex="0" aria-label="Dosya yükleme alanı">
+              <input type="file" id="fileInput" hidden />
+              <div class="dropzone-inner">
+                <div class="dropzone-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3v9m0 0 3.5-3.5M12 12 8.5 8.5" />
+                    <path d="M4 14v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5" />
+                  </svg>
+                </div>
+                <p class="dropzone-title">Dosyaları buraya bırak</p>
+                <p class="dropzone-sub">veya <span class="link">bilgisayarından seç</span></p>
+                <p class="dropzone-meta">Format otomatik algılanır &middot; JPG, PNG, WEBP, MP3, MP4 ve daha fazlası &middot; Çoklu dosya desteklenir</p>
               </div>
             </div>
-            <div class="picker-arrow" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
-            </div>
-            <div class="picker-group">
-              <label>Hedef format</label>
-              <div class="select-wrap" id="toFormatDD">
-                <button class="select-trigger" type="button" data-trigger aria-haspopup="listbox" aria-expanded="false">
-                  <span class="select-value" data-value>—</span>
-                  <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </button>
-                <div class="select-panel" data-panel hidden>
-                  <div class="select-search-wrap">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-                    <input class="select-search" type="text" placeholder="Format ara…" autocomplete="off" data-search />
+
+            <div class="picker">
+              <div class="picker-group">
+                <label>Kaynak format</label>
+                <div class="detect-box" id="detectBox">
+                  <span class="detect-ext" id="detectExt">—</span>
+                  <span class="detect-name" id="detectName">Dosya yüklenmedi</span>
+                </div>
+              </div>
+              <div class="picker-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
+              </div>
+              <div class="picker-group">
+                <label>Hedef format</label>
+                <div class="select-wrap" id="toFormatDD">
+                  <button class="key select-trigger" type="button" data-trigger aria-haspopup="listbox" aria-expanded="false">
+                    <span class="select-value" data-value>—</span>
+                    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  </button>
+                  <div class="select-panel" data-panel hidden>
+                    <div class="select-search-wrap">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+                      <input class="select-search" type="text" placeholder="Format ara…" autocomplete="off" data-search />
+                    </div>
+                    <div class="select-options" data-options></div>
                   </div>
-                  <div class="select-options" data-options></div>
                 </div>
               </div>
             </div>
+
+            <div class="compat-note" id="compatNote" role="status"></div>
+
+            <button class="btn btn--primary key convert-btn" id="convertBtn" type="button" disabled>
+              <span class="btn-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M15 6l6 6-6 6" />
+                </svg>
+              </span>
+              <span class="btn-label">Dönüştürmeyi Başlat</span>
+            </button>
+
+            <div class="queue" id="queue"></div>
           </div>
+        </div>
+      </div>
 
-          <div class="compat-note" id="compatNote"></div>
-
-          <button class="btn btn--primary convert-btn" id="convertBtn" type="button" disabled>
-            <span class="btn-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m22 2-7 20-4-9-9-4Z" />
-                <path d="M22 2 11 13" />
-              </svg>
-            </span>
-            <span class="btn-label">Dönüştürmeyi Başlat</span>
-          </button>
-
-          <div class="progress" id="progress" hidden>
-            <div class="progress-bar" id="progressBar"></div>
-            <span class="progress-text" id="progressText">%0</span>
-          </div>
-
-          <div class="queue" id="queue"></div>
+      <div class="container stats-band">
+        <div class="stat">
+          <div class="stat-num">200+</div>
+          <div class="stat-label">format çifti</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">45+</div>
+          <div class="stat-label">desteklenen format</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">%100</div>
+          <div class="stat-label">görüntü işlemi yerel</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">0</div>
+          <div class="stat-label">kota &amp; üyelik</div>
         </div>
       </div>
     </section>
 
     <section class="catalog" id="catalog">
       <div class="container">
-        <h2 class="section-title">Desteklenen Format Kataloğu</h2>
-        <p class="section-sub">Seçtiğiniz formata göre mümkün olan tüm dönüştürmeler. <span class="badge badge--ok">Tarayıcıda</span> işaretli dönüştürmeler anında çalışır.</p>
+        <div class="section-head">
+          <p class="kicker">02 / Katalog</p>
+          <h2 class="section-title">Tüm <span class="grad">formatlar</span></h2>
+          <p class="section-sub">Seçtiğiniz formata göre mümkün olan tüm dönüşümler. <span class="badge badge--ok">Tarayıcıda</span> işaretli dönüşümler anında çalışır.</p>
+        </div>
 
         <div class="filters">
-          <button class="filter-chip active" data-filter="all">Tümü</button>
-          <button class="filter-chip" data-filter="gorsel">Görüntü</button>
-          <button class="filter-chip" data-filter="ses">Ses</button>
-          <button class="filter-chip" data-filter="video">Video</button>
-          <button class="filter-chip" data-filter="belge">Belge</button>
-          <button class="filter-chip" data-filter="arsiv">Arşiv</button>
-          <button class="filter-chip" data-filter="font">Font</button>
-          <button class="filter-chip" data-filter="diger">Diğer</button>
+          <button class="filter-chip key active" data-filter="all">Tümü</button>
+          <button class="filter-chip key" data-filter="gorsel">Görüntü</button>
+          <button class="filter-chip key" data-filter="ses">Ses</button>
+          <button class="filter-chip key" data-filter="video">Video</button>
+          <button class="filter-chip key" data-filter="belge">Belge</button>
+          <button class="filter-chip key" data-filter="arsiv">Arşiv</button>
+          <button class="filter-chip key" data-filter="font">Font</button>
+          <button class="filter-chip key" data-filter="diger">Diğer</button>
         </div>
 
         <div class="catalog-grid" id="catalogGrid"></div>
@@ -147,23 +189,50 @@
 
     <section class="features" id="features">
       <div class="container">
-        <h2 class="section-title">Neden <span class="grad-text">FormatDeğiştir</span>?</h2>
+        <div class="section-head">
+          <p class="kicker">03 / Neden</p>
+          <h2 class="section-title">Bu site nerede <span class="grad">çalışıyor?</span></h2>
+        </div>
         <div class="features-grid">
           <article class="card feature">
-            <div class="feature-icon" style="--fc:#7c3aed">⚡</div>
+            <div class="feature-icon" style="--fc:var(--blue)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg>
+            </div>
             <h3>Işık Hızında</h3>
-            <p>Dönüştürmeler cihazınızda, tarayıcı içinde gerçekleşir. Dosyalar sunucuya yüklenmez, bu yüzden işlem neredeyse anında biter.</p>
+            <p>Dönüşümler cihazında, tarayıcının içinde gerçekleşir. Dosyalar sunucuya hiç çıkmadan işlem neredeyse anında biter.</p>
+            <span class="feature-tag">tarayıcıda</span>
           </article>
           <article class="card feature">
-            <div class="feature-icon" style="--fc:#06b6d4">🔒</div>
+            <div class="feature-icon" style="--fc:var(--teal)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+            </div>
             <h3>Gizlilik Önce</h3>
-            <p>Tüm işlemler yereldir. Dosyalarınız hiçbir zaman cihazınızdan çıkmaz — özel belgeler ve kişisel veriler tamamen güvende.</p>
+            <p>Tüm görüntü işlemleri yereldir. Dosyaların hiçbir zaman cihazından çıkmaz — özel belgeler ve kişisel veriler tamamen sende kalır.</p>
+            <span class="feature-tag">yerel işlem</span>
           </article>
           <article class="card feature">
-            <div class="feature-icon" style="--fc:#ec4899">🆓</div>
+            <div class="feature-icon" style="--fc:var(--orange)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 7.5a4 4 0 0 1 0 9L12 22l-5.5-5.5a4 4 0 1 1 5.5-5.5l.5.5.5-.5a4 4 0 0 1 4.5-4Z"/></svg>
+            </div>
             <h3>Sonuna Kadar Ücretsiz</h3>
-            <p>Sınırsız dönüştürme, dosya boyutu veya günlük kullanım kotası yok. Üyelik, ödeme veya kurulum gerekmez.</p>
+            <p>Sınırsız dönüştürme, dosya boyutu veya günlük kota yok. Üyelik, ödeme ya da kurulum gerekmez — her şey açık.</p>
+            <span class="feature-tag">sonsuz</span>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="container">
+        <div class="card cta-card">
+          <h2>Hazır mısın? İlk dosyanı <span class="grad">şimdi dönüştür.</span></h2>
+          <p>Kayıt yok, kota yok, bekleme yok. Dosyaların senin kalıyor.</p>
+          <a class="btn btn--primary key" href="#converter">
+            <span class="btn-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+            </span>
+            <span class="btn-label">Kullanmaya başla</span>
+          </a>
         </div>
       </div>
     </section>
@@ -171,8 +240,10 @@
 
   <footer class="site-footer">
     <div class="container">
-      <p>◈ FormatDeğiştir — Modern format dönüştürücü</p>
-      <p class="footer-sub">Görüntü dönüştürmeleri tarayıcınızda, diğer formatlar kendi sunucumuzda (ffmpeg) gerçekleşir.</p>
+      <p><span class="brand-mark brand-mark--sm" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg>
+      </span> FormatDeğiştir — modern dosya dönüştürücü</p>
+      <p class="footer-sub">Görüntü dönüşümleri tarayıcında, diğer formatlar kendi sunucumuzda (ffmpeg) işlenir.</p>
     </div>
   </footer>
 

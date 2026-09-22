@@ -1,6 +1,7 @@
 const Busboy = require("busboy");
 const ffmpeg = require("fluent-ffmpeg");
 const ffmpegStatic = require("ffmpeg-static");
+const { put, del } = require("@vercel/blob");
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
@@ -55,45 +56,105 @@ module.exports = async (req, res) => {
       );
     }
 
-    const { buffer, name, from, to } = await parseMultipart(req);
-    if (!buffer.length) throw new Error("Dosya boş.");
-
-    const extFrom = (from || path.extname(name).slice(1)).toLowerCase();
-    const extTo = (to || "").toLowerCase();
-    if (!AUDIO.includes(extTo) && !VIDEO.includes(extTo) && !IMAGE_MIME[extTo]) {
-      throw new Error("Hedef format desteklenmiyor: " + extTo);
+    const isJson = String(req.headers["content-type"] || "").includes("application/json");
+    if (isJson) {
+      const body = await readJson(req);
+      return await convertFromUrl(req, res, body);
     }
 
-    const inPath = path.join(
-      os.tmpdir(),
-      "in-" + Date.now() + "-" + Math.random().toString(36).slice(2) + "." + extFrom
-    );
-    const outPath = path.join(
-      os.tmpdir(),
-      "out-" + Date.now() + "-" + Math.random().toString(36).slice(2) + "." + extTo
-    );
-    fs.writeFileSync(inPath, buffer);
+    const { buffer, name, from, to } = await parseMultipart(req);
+    if (!buffer.length) throw new Error("Dosya boş.");
+    const out = await convertBuffer(buffer, name, from, to);
 
-    await runFfmpeg(inPath, outPath, extFrom, extTo);
+    if (process.env.BLOB_READ_WRITE_TOKEN) {
+      const blob = await uploadResult(out);
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "application/json");
+      return res.end(JSON.stringify({ url: blob.url, name: out.outName }));
+    }
 
-    const outName = name.replace(/\.[^.]+$/, "") + "." + extTo;
     res.statusCode = 200;
-    res.setHeader("Content-Type", mimeFor(extTo));
-    res.setHeader("Content-Disposition", 'attachment; filename="' + outName.replace(/"/g, "") + '"');
-    const stream = fs.createReadStream(outPath);
-    stream.on("error", () => {
-      try { fs.unlinkSync(outPath); } catch (e) {}
-    });
-    res.on("finish", () => {
-      try { fs.unlinkSync(inPath); fs.unlinkSync(outPath); } catch (e) {}
-    });
-    stream.pipe(res);
+    res.setHeader("Content-Type", mimeFor(out.extTo));
+    res.setHeader("Content-Disposition", 'attachment; filename="' + out.outName.replace(/"/g, "") + '"');
+    res.end(out.data);
   } catch (err) {
     res.statusCode = 500;
     res.setHeader("Content-Type", "application/json");
     res.end(JSON.stringify({ error: err.message || "Dönüştürme hatası" }));
   }
 };
+
+async function convertFromUrl(req, res, body) {
+  const { url, from, to, name } = body;
+  if (!url) throw new Error("Dosya URL'si eksik.");
+
+  const inputRes = await fetch(url);
+  if (!inputRes.ok) throw new Error("Kaynak dosya indirilemedi: HTTP " + inputRes.status);
+  const buffer = Buffer.from(await inputRes.arrayBuffer());
+  if (!buffer.length) throw new Error("Dosya boş.");
+
+  const out = await convertBuffer(buffer, name || "dosya", from, to);
+  const blob = await uploadResult(out);
+  try { await del(url); } catch (e) {}
+
+  res.statusCode = 200;
+  res.setHeader("Content-Type", "application/json");
+  res.end(JSON.stringify({ url: blob.url, name: out.outName }));
+}
+
+async function uploadResult(out) {
+  const safeName = out.outName.replace(/[^a-zA-Z0-9._-]/g, "_");
+  return put(
+    "outputs/" + Date.now() + "-" + Math.random().toString(36).slice(2) + "-" + safeName,
+    out.data,
+    {
+      access: "public",
+      contentType: mimeFor(out.extTo),
+      contentDisposition: 'attachment; filename="' + out.outName.replace(/"/g, "") + '"',
+    }
+  );
+}
+
+async function convertBuffer(buffer, name, from, to) {
+  const extFrom = (from || path.extname(name).slice(1)).toLowerCase();
+  const extTo = (to || "").toLowerCase();
+  if (!AUDIO.includes(extTo) && !VIDEO.includes(extTo) && !IMAGE_MIME[extTo]) {
+    throw new Error("Hedef format desteklenmiyor: " + extTo);
+  }
+
+  const inPath = path.join(
+    os.tmpdir(),
+    "in-" + Date.now() + "-" + Math.random().toString(36).slice(2) + "." + extFrom
+  );
+  const outPath = path.join(
+    os.tmpdir(),
+    "out-" + Date.now() + "-" + Math.random().toString(36).slice(2) + "." + extTo
+  );
+  fs.writeFileSync(inPath, buffer);
+
+  await runFfmpeg(inPath, outPath, extFrom, extTo);
+
+  const data = fs.readFileSync(outPath);
+  try { fs.unlinkSync(inPath); fs.unlinkSync(outPath); } catch (e) {}
+
+  const outName = name.replace(/\.[^.]+$/, "") + "." + extTo;
+  return { extTo, outName, data };
+}
+
+function readJson(req) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    req.on("data", (d) => chunks.push(d));
+    req.on("end", () => {
+      try {
+        resolve(JSON.parse(Buffer.concat(chunks).toString("utf8") || "{}"));
+      } catch (e) {
+        reject(new Error("Geçersiz istek gövdesi"));
+      }
+    });
+    req.on("error", reject);
+  });
+}
 
 function parseMultipart(req) {
   return new Promise((resolve, reject) => {
@@ -147,5 +208,5 @@ function mimeFor(ext) {
 
 module.exports.config = {
   includeFiles: "node_modules/ffmpeg-static/**",
-  maxDuration: 60,
+  maxDuration: 300,
 };

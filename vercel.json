@@ -2,7 +2,7 @@
   "functions": {
     "api/convert.js": {
       "includeFiles": "node_modules/ffmpeg-static/**",
-      "maxDuration": 60
+      "maxDuration": 300
     }
   }
 }
